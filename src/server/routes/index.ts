@@ -1,11 +1,19 @@
 import { Router } from "express";
 import { StatusCodes } from 'http-status-codes'
 
+import { cidadesControllers } from "./../controllers";
+
 const router = Router();
 
 router.get('/', (req, res)=> {
 
-   return res.status(StatusCodes.ACCEPTED).json(req.body)
+   res.send('foi!!!!')
 })
+
+router.get('/cidades', cidadesControllers.getAllValidation, cidadesControllers.getAll)
+router.post('/cidades', cidadesControllers.createValidation, cidadesControllers.create)
+router.get('/cidades/:id', cidadesControllers.getByIdValidation, cidadesControllers.getById)
+router.put('/cidades/:id', cidadesControllers.updateByIdValidation, cidadesControllers.updateById)
+router.delete('/cidades/:id', cidadesControllers.deleteByIdValidation, cidadesControllers.deleteById)
 
 export  {router};

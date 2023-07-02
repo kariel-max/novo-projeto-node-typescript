@@ -14,7 +14,7 @@
     },
     "plugins": [
         "@typescript-eslint"
-    ]
+    ],
     // "rules": {
     //     "indent": [
     //         "error",
@@ -33,4 +33,5 @@
     //         "always"
     //     ]
     // }
+    "@typescript-eslint/ban-types": "off"
 }
