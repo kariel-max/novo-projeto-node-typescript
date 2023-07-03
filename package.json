@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start": "nodemon src/Sever.ts"
+    "start": "nodemon src/Sever.ts",
+    "production": "node ./build/Sever.js",
+    "preproduction": "tsc"
   },
   "author": "kariel Emanoel",
   "license": "ISC",
@@ -27,9 +29,12 @@
     "@types/http-status-codes": "^1.2.0",
     "@types/jest": "^29.5.2",
     "@types/supertest": "^2.0.12",
-    "@typescript-eslint/eslint-plugin": "^5.60.0",
-    "@typescript-eslint/parser": "^5.60.0",
+    "@typescript-eslint/eslint-plugin": "^5.61.0",
+    "@typescript-eslint/parser": "^5.61.0",
     "supertest": "^6.3.3"
   },
-  "repository": "https://github.com/kariel-max/novo-projeto-node-typescript.git"
+  "repository": "https://github.com/kariel-max/novo-projeto-node-typescript.git",
+  "engines": {
+    "node": "18.x"
+  }
 }
