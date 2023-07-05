@@ -2,12 +2,11 @@ import { Request, Response } from "express";
 import * as yup from 'yup';
 import { validation } from "../../share/middleware";
 import { StatusCodes } from "http-status-codes";
+import { ICidade } from "../../database/models";
 
-interface ICidade {
-    nome: string;
-}
+interface IBodyProp extends Omit<ICidade,'id'> {}
 export const createValidation = validation((getSchema)=>({
-    body: getSchema<ICidade>(yup.object().shape({
+    body: getSchema<IBodyProp>(yup.object().shape({
         nome: yup.string().required().min(3),
     })),
 }));
