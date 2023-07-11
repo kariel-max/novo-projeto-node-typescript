@@ -3,14 +3,14 @@ import { StatusCodes } from 'http-status-codes';
 import * as yup from 'yup';
 
 import { validation } from '../../share/middleware';
+import { cidadesProviders } from '../../database/providers/Cidades';
+import { ICidade } from '../../database/models';
 
 
 interface IParamsProps {
   id?: number;
 }
-interface IBodyProps {
-  nome?: string
-}
+interface IBodyProps extends Omit<ICidade, 'id'> {}
 
 export const updateByIdValidation = validation((getSchema) => ({
   params: getSchema<IParamsProps>(yup.object().shape({
@@ -22,12 +22,23 @@ export const updateByIdValidation = validation((getSchema) => ({
 }));
 
 export const updateById = async (req: Request<IParamsProps, {}, IBodyProps>, res: Response) => {
-
-  if(Number(req.params.id) === 99999) return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+ if(!req.params.id) {
+  return res.status(StatusCodes.BAD_REQUEST).json({
     errors: {
-      default: 'Registro não encotrado'
+      default: 'O parâmentro id precisar ser informado'
     }
   })
+ }
 
-  return res.status(StatusCodes.NO_CONTENT).json('Não implementado');
+ const result = await cidadesProviders.UpdateById(req.params.id, req.body)
+
+  if(result instanceof Error) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      errors: {
+        default: result.message
+      }
+    })
+  } 
+
+  return res.status(StatusCodes.NO_CONTENT).json(result);
 };
