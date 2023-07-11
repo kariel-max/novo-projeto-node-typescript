@@ -36,6 +36,7 @@ exports.updateById = exports.updateByIdValidation = void 0;
 const http_status_codes_1 = require("http-status-codes");
 const yup = __importStar(require("yup"));
 const middleware_1 = require("../../share/middleware");
+const Cidades_1 = require("../../database/providers/Cidades");
 exports.updateByIdValidation = (0, middleware_1.validation)((getSchema) => ({
     params: getSchema(yup.object().shape({
         id: yup.number().integer().required().moreThan(0),
@@ -45,12 +46,21 @@ exports.updateByIdValidation = (0, middleware_1.validation)((getSchema) => ({
     })),
 }));
 const updateById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    if (Number(req.params.id) === 99999)
-        return res.status(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR).json({
+    if (!req.params.id) {
+        return res.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json({
             errors: {
-                default: 'Registro não encotrado'
+                default: 'O parâmentro id precisar ser informado'
             }
         });
-    return res.status(http_status_codes_1.StatusCodes.NO_CONTENT).json('Não implementado');
+    }
+    const result = yield Cidades_1.cidadesProviders.UpdateById(req.params.id, req.body);
+    if (result instanceof Error) {
+        return res.status(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR).json({
+            errors: {
+                default: result.message
+            }
+        });
+    }
+    return res.status(http_status_codes_1.StatusCodes.NO_CONTENT).json(result);
 });
 exports.updateById = updateById;

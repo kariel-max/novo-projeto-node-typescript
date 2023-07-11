@@ -36,18 +36,28 @@ exports.deleteById = exports.deleteByIdValidation = void 0;
 const http_status_codes_1 = require("http-status-codes");
 const yup = __importStar(require("yup"));
 const middleware_1 = require("../../share/middleware");
+const Cidades_1 = require("../../database/providers/Cidades");
 exports.deleteByIdValidation = (0, middleware_1.validation)((getSchema) => ({
     params: getSchema(yup.object().shape({
         id: yup.number().integer().required().moreThan(0),
     })),
 }));
 const deleteById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    if (Number(req.params.id) === 99999)
-        return res.status(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR).json({
+    if (!req.params.id) {
+        return res.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json({
             errors: {
-                default: 'Registro não encotrado'
+                default: 'O parâmetro (id) precisa ser informado'
             }
         });
-    return res.status(http_status_codes_1.StatusCodes.NO_CONTENT).send();
+    }
+    const result = yield Cidades_1.cidadesProviders.DeleteById(req.params.id);
+    if (result instanceof Error) {
+        return res.status(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR).json({
+            errors: {
+                default: result.message
+            }
+        });
+    }
+    return res.status(http_status_codes_1.StatusCodes.NO_CONTENT).send(result);
 });
 exports.deleteById = deleteById;

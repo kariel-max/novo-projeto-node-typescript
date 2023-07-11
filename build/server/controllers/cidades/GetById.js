@@ -35,6 +35,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getById = exports.getByIdValidation = void 0;
 const http_status_codes_1 = require("http-status-codes");
 const yup = __importStar(require("yup"));
+const Cidades_1 = require("../../database/providers/Cidades");
 const middleware_1 = require("../../share/middleware");
 exports.getByIdValidation = (0, middleware_1.validation)((getSchema) => ({
     params: getSchema(yup.object().shape({
@@ -42,15 +43,21 @@ exports.getByIdValidation = (0, middleware_1.validation)((getSchema) => ({
     })),
 }));
 const getById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    if (Number(req.params.id) === 99999)
-        return res.status(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR).json({
+    if (!req.params.id) {
+        return res.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json({
             errors: {
-                default: 'Registro não encotrado'
+                default: 'O parâmetro "id" precisa ser informado.'
             }
         });
-    return res.status(http_status_codes_1.StatusCodes.OK).json({
-        id: req.params.id,
-        nome: 'Porto Franco'
-    });
+    }
+    const result = yield Cidades_1.cidadesProviders.getById(req.params.id);
+    if (result instanceof Error) {
+        return res.status(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR).json({
+            errors: {
+                default: result.message
+            }
+        });
+    }
+    return res.status(http_status_codes_1.StatusCodes.OK).json(result);
 });
 exports.getById = getById;
