@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "start": "nodemon src/Sever.ts",
-    "production": "node ./build/Sever.js",
+    "production": "node build/Sever.js",
     "preproduction": "tsc",
 
     "knex:rollback-all": "knex --knexfile ./src/server/database/knex/Environment.ts migrate:rollback --all",

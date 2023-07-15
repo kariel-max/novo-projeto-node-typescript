@@ -2,12 +2,12 @@
     "version": 2,
     "public": true,
     "build": {
-            "src": "src/Sever.js",
+            "src": "build/Sever.js",
             "use": "@vercel/node"
         },
     "routes":
         {
             "src": "/(.*)",
-            "dest": "src/Sever.js"
+            "dest": "build/Sever.js"
         }
 }
