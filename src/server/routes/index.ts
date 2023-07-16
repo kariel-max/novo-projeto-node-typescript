@@ -5,7 +5,6 @@ import { cidadesControllers } from "./../controllers";
 const router = Router();
 
 router.get('/', (req, res)=> {
-
    res.send('foi!!!!')
 })
 
