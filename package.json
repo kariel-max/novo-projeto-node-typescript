@@ -7,7 +7,7 @@
     "test": "jest",
     "start": "ts-node-dev ./src/Sever.ts",
     "production": "node ./build/Sever.js",
-    "preproduction": "tsc",
+    
     "knex:rollback-all": "knex --knexfile ./src/server/database/knex/Environment.ts migrate:rollback --all",
     "knex:rollback": "knex --knexfile ./src/server/database/knex/Environment.ts migrate:rollback",
     "knex:migrate": "knex --knexfile ./src/server/database/knex/Environment.ts migrate:latest",
