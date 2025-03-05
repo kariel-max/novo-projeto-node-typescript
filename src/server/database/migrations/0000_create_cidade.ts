@@ -1,5 +1,5 @@
 import { Knex } from "knex";
-import { ETablesNames } from "../seed/ETablesNames";
+import { ETablesNames } from "../seeds/ETablesNames";
 
 export async function up(knex: Knex) {
     return knex.schema.createTable(ETablesNames.cidade, table => {

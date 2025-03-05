@@ -1,5 +1,5 @@
 import { Knex } from "../..";
-import { ETablesNames } from "../../seed/ETablesNames";
+import { ETablesNames } from "../../seeds/ETablesNames";
 
 export const count = async (filter = ''): Promise<number | Error> => {
 

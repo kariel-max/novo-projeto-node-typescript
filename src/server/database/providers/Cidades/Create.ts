@@ -1,6 +1,6 @@
 import { Knex } from "../..";
 import { ICidade } from "../../models";
-import { ETablesNames } from "../../seed/ETablesNames";
+import { ETablesNames } from "../../seeds/ETablesNames";
 
 export const create = async (cidade:Omit<ICidade, 'id'>):Promise<number | Error>=> {
  

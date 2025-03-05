@@ -1,5 +1,5 @@
 import { Knex } from "../..";
-import { ETablesNames } from "../../seed/ETablesNames";
+import { ETablesNames } from "../../seeds/ETablesNames";
 import { ICidade } from "../../models";
 
 export const getAll = async (page: number, limit: number, filter: string,id=0): Promise<ICidade[] | Error> => {
